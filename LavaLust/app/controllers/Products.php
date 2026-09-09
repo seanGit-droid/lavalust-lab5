@@ -30,21 +30,29 @@ class Products extends Controller {
     }
 
     public function edit($id) {
-        $data['product'] = $this->Product_model->get_product_by_id($id);
-        $this->call->view('products/edit', $data);
+    $product = $this->Product_model->get_product_by_id($id);
+
+    // Kung sakaling nakabalot sa indexed array ang result ng LavaLust query
+    if (is_array($product) && isset($product[0])) {
+        $data['product'] = $product[0];
+    } else {
+        $data['product'] = $product;
     }
 
-    public function update($id) {
-        $data = array(
-            'product_name' => $_POST['name'] ?? $_POST['product_name'] ?? '',
-            'description'  => $_POST['description'] ?? '',
-            'price'        => $_POST['price'] ?? 0,
-            'quantity'     => $_POST['quantity'] ?? 0
-        );
+    $this->call->view('products/edit', $data);
+}
 
-        $this->Product_model->update_product($id, $data);
-        redirect('products');
-    }
+public function update($id) {
+    $data = array(
+        'product_name' => $_POST['product_name'] ?? $_POST['name'] ?? '',
+        'description'  => $_POST['description'] ?? '',
+        'price'        => $_POST['price'] ?? 0,
+        'quantity'     => $_POST['quantity'] ?? 0
+    );
+
+    $this->Product_model->update_product($id, $data);
+    redirect('products');
+}
 
     public function delete($id) {
         $this->Product_model->delete_product($id);

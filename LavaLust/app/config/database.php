@@ -1,10 +1,10 @@
 <?php
-defined('PREVENT_DIRECT_SCRIPT_ACCESS') OR exit('No direct script access allowed');
+defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 $database['default'] = array(
     'hostname' => 'mysql-2cc8c2cd-lavalustproject-1112.b.aivencloud.com',
     'username' => 'avnadmin',
-    'password' => 'YOUR_AIVEN_PASSWORD_HERE', // Ilagay ang totoong Aiven password mo
+    'password' => 'AVNS_86pO-PmnQzQCygKzmzt',
     'database' => 'defaultdb',
     'port'     => 20551,
     'driver'   => 'pdo',
@@ -13,5 +13,4 @@ $database['default'] = array(
     'prefix'   => '',
 );
 
-// Fallback for LavaLust core versions looking for 'main' key
 $database['main'] = &$database['default'];

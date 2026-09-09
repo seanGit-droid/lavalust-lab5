@@ -18,13 +18,19 @@ class Products extends Controller {
     }
 
     public function store() {
+        // Safe input fetching using isset/empty checks
+        $name        = isset($_POST['name']) ? $_POST['name'] : '';
+        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $price       = isset($_POST['price']) ? $_POST['price'] : 0;
+        $quantity    = isset($_POST['quantity']) ? $_POST['quantity'] : 0;
+
         $data = array(
-            'name'        => $this->io->post('name') ?? $this->io->post('product_name') ?? '',
-            'description' => $this->io->post('description') ?? '',
-            'price'       => $this->io->post('price') ?? 0,
-            'quantity'    => $this->io->post('quantity') ?? $this->io->post('qty') ?? 0
+            'name'        => $name,
+            'description' => $description,
+            'price'       => $price,
+            'quantity'    => $quantity
         );
-        
+
         $this->Product_model->insert_product($data);
         redirect('products');
     }
@@ -35,13 +41,18 @@ class Products extends Controller {
     }
 
     public function update($id) {
+        $name        = isset($_POST['name']) ? $_POST['name'] : '';
+        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $price       = isset($_POST['price']) ? $_POST['price'] : 0;
+        $quantity    = isset($_POST['quantity']) ? $_POST['quantity'] : 0;
+
         $data = array(
-            'name'        => $this->io->post('name') ?? $this->io->post('product_name') ?? '',
-            'description' => $this->io->post('description') ?? '',
-            'price'       => $this->io->post('price') ?? 0,
-            'quantity'    => $this->io->post('quantity') ?? $this->io->post('qty') ?? 0
+            'name'        => $name,
+            'description' => $description,
+            'price'       => $price,
+            'quantity'    => $quantity
         );
-        
+
         $this->Product_model->update_product($id, $data);
         redirect('products');
     }

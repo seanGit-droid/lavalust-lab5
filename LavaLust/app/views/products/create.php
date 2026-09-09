@@ -2,37 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: sans-serif; background: #121824; color: #fff; padding: 40px; }
+        .form-card { max-width: 500px; margin: 0 auto; background: #1d2636; padding: 25px; border-radius: 8px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input, textarea { width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #334155; background: #0f172a; color: #fff; box-sizing: border-box; }
+        button { background: #4f46e5; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
+    </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
-    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-lg border border-gray-700">
-        <h2 class="text-2xl font-bold mb-6 text-indigo-400">Add New Product</h2>
-        <form action="<?= site_url('products/store'); ?>" method="POST" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-300 mb-1">Product Name</label>
-                <input type="text" name="product_name" required class="w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-300 mb-1">Description</label>
-                <textarea name="description" rows="3" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white"></textarea>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1">Price</label>
-                    <input type="number" step="0.01" name="price" required class="w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1">Quantity</label>
-                    <input type="number" name="quantity" required class="w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white">
-                </div>
-            </div>
-            <div class="flex justify-between items-center pt-4">
-                <a href="<?= site_url('products'); ?>" class="text-gray-400 hover:text-white">Cancel</a>
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 font-semibold px-6 py-2.5 rounded-lg">Save Product</button>
-            </div>
-        </form>
-    </div>
+<body>
+
+<div class="form-card">
+    <h2>Add New Product</h2>
+    <form action="<?=site_url('products/store');?>" method="POST">
+        <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" name="name" required>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" step="0.01" name="price" required>
+        </div>
+        <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" name="quantity" required>
+        </div>
+        <button type="submit">Save Product</button>
+    </form>
+</div>
+
 </body>
 </html>

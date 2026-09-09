@@ -4,7 +4,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 $database['main'] = array(
     'hostname' => 'mysql-2cc8c2cd-lavalustproject-1112.b.aivencloud.com',
     'username' => 'avnadmin',
-    'password' => 'AVNS_86pO-PmnQzQCygKzmzt',
+    'password' => '',
     'database' => 'mydb',
     'driver'   => 'mysql',
     'port'     => 20551,

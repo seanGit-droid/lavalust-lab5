@@ -18,17 +18,11 @@ class Products extends Controller {
     }
 
     public function store() {
-        // Safe input fetching using isset/empty checks
-        $name        = isset($_POST['name']) ? $_POST['name'] : '';
-        $description = isset($_POST['description']) ? $_POST['description'] : '';
-        $price       = isset($_POST['price']) ? $_POST['price'] : 0;
-        $quantity    = isset($_POST['quantity']) ? $_POST['quantity'] : 0;
-
         $data = array(
-            'name'        => $name,
-            'description' => $description,
-            'price'       => $price,
-            'quantity'    => $quantity
+            'product_name' => $_POST['name'] ?? $_POST['product_name'] ?? '',
+            'description'  => $_POST['description'] ?? '',
+            'price'        => $_POST['price'] ?? 0,
+            'quantity'     => $_POST['quantity'] ?? 0
         );
 
         $this->Product_model->insert_product($data);
@@ -41,16 +35,11 @@ class Products extends Controller {
     }
 
     public function update($id) {
-        $name        = isset($_POST['name']) ? $_POST['name'] : '';
-        $description = isset($_POST['description']) ? $_POST['description'] : '';
-        $price       = isset($_POST['price']) ? $_POST['price'] : 0;
-        $quantity    = isset($_POST['quantity']) ? $_POST['quantity'] : 0;
-
         $data = array(
-            'production_name'        => $name,
-            'description' => $description,
-            'price'       => $price,
-            'qty'    => $quantity
+            'product_name' => $_POST['name'] ?? $_POST['product_name'] ?? '',
+            'description'  => $_POST['description'] ?? '',
+            'price'        => $_POST['price'] ?? 0,
+            'quantity'     => $_POST['quantity'] ?? 0
         );
 
         $this->Product_model->update_product($id, $data);

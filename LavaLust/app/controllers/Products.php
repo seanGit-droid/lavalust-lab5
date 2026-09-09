@@ -47,10 +47,10 @@ class Products extends Controller {
         $quantity    = isset($_POST['quantity']) ? $_POST['quantity'] : 0;
 
         $data = array(
-            'name'        => $name,
+            'production_name'        => $name,
             'description' => $description,
             'price'       => $price,
-            'quantity'    => $quantity
+            'qty'    => $quantity
         );
 
         $this->Product_model->update_product($id, $data);

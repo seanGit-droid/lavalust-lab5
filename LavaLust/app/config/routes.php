@@ -1,0 +1,77 @@
+<?php
+defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
+/**
+ * ------------------------------------------------------------------
+ * LavaLust - an opensource lightweight PHP MVC Framework
+ * ------------------------------------------------------------------
+ *
+ * MIT License
+ *
+ * Copyright (c) 2020 Ronald M. Marasigan
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package LavaLust
+ * @author Ronald M. Marasigan <ronald.marasigan@yahoo.com>
+ * @since Version 1
+ * @link https://github.com/ronmarasigan/LavaLust
+ * @license https://opensource.org/licenses/MIT MIT License
+ */
+
+/*
+| -------------------------------------------------------------------
+| URI ROUTING
+| -------------------------------------------------------------------
+| Here is where you can register web routes for your application.
+|
+|
+*/
+/** @var object $router **/
+
+//$router->get('/', 'UsersController::index');
+//$router->get('/student', 'StudentController::index');
+//$router->get('/student/login', 'StudentController::login');
+//$router->get('/student/logout', 'StudentController::logout');
+
+// Protected route applying StudentMiddleware
+//$router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
+
+//$router->get('/users', 'UsersController::index');
+
+
+
+
+// Load middleware configuration
+load_class('config', 'kernel')->load('middleware');
+
+// Lab 5 Default Route -> Login
+$router->get('/', 'Auth::login');
+
+// Auth Routes
+$router->get('/login', 'Auth::login');
+$router->post('/authenticate', 'Auth::authenticate');
+$router->get('/logout', 'Auth::logout');
+
+// Products CRUD Routes
+$router->get('/products', 'Products::index')->middleware('AuthMiddleware');
+$router->get('/products/create', 'Products::create')->middleware('AuthMiddleware');
+$router->post('/products/store', 'Products::store')->middleware('AuthMiddleware');
+$router->get('/products/edit/{id}', 'Products::edit')->middleware('AuthMiddleware');
+$router->post('/products/update/{id}', 'Products::update')->middleware('AuthMiddleware');
+$router->get('/products/delete/{id}', 'Products::delete')->middleware('AuthMiddleware');

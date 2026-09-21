@@ -5,6 +5,16 @@ class Products extends Controller {
 
     public function __construct() {
         parent::__construct();
+        // 1. I-load ang session library
+        $this->call->library('session');
+
+        // 2. I-check kung naka-login ang user; kung hindi, i-redirect sa /login
+        if (!$this->session->userdata('logged_in')) {
+            redirect('/login');
+            exit;
+        }
+
+        // 3. I-load ang Product model
         $this->call->model('Product_model');
     }
 
@@ -26,36 +36,36 @@ class Products extends Controller {
         );
 
         $this->Product_model->insert_product($data);
-        redirect('products');
+        redirect('/products');
     }
 
     public function edit($id) {
-    $product = $this->Product_model->get_product_by_id($id);
+        $product = $this->Product_model->get_product_by_id($id);
 
-    // Kung sakaling nakabalot sa indexed array ang result ng LavaLust query
-    if (is_array($product) && isset($product[0])) {
-        $data['product'] = $product[0];
-    } else {
-        $data['product'] = $product;
+        // Kung sakaling nakabalot sa indexed array ang result ng LavaLust query
+        if (is_array($product) && isset($product[0])) {
+            $data['product'] = $product[0];
+        } else {
+            $data['product'] = $product;
+        }
+
+        $this->call->view('products/edit', $data);
     }
 
-    $this->call->view('products/edit', $data);
-}
+    public function update($id) {
+        $data = array(
+            'product_name' => $_POST['product_name'] ?? $_POST['name'] ?? '',
+            'description'  => $_POST['description'] ?? '',
+            'price'        => $_POST['price'] ?? 0,
+            'quantity'     => $_POST['quantity'] ?? 0
+        );
 
-public function update($id) {
-    $data = array(
-        'product_name' => $_POST['product_name'] ?? $_POST['name'] ?? '',
-        'description'  => $_POST['description'] ?? '',
-        'price'        => $_POST['price'] ?? 0,
-        'quantity'     => $_POST['quantity'] ?? 0
-    );
-
-    $this->Product_model->update_product($id, $data);
-    redirect('products');
-}
+        $this->Product_model->update_product($id, $data);
+        redirect('/products');
+    }
 
     public function delete($id) {
         $this->Product_model->delete_product($id);
-        redirect('products');
+        redirect('/products');
     }
 }

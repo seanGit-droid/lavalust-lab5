@@ -19,15 +19,19 @@ class Auth extends Controller {
         if ($username === 'admin' && $password === 'admin123') {
             $this->session->set_userdata('logged_in', true);
             $this->session->set_userdata('username', $username);
-            redirect('products');
+            
+            // Lagyan ng '/' bago ang route name para malinis ang URL redirect
+            redirect('/products'); 
         } else {
             $this->session->set_flashdata('error', 'Invalid username or password');
-            redirect('login');
+            
+            // Lagyan din ng '/' dito
+            redirect('/login'); 
         }
     }
 
     public function logout() {
         $this->session->sess_destroy();
-        redirect('login');
+        redirect('/login');
     }
 }

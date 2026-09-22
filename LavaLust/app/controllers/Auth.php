@@ -27,9 +27,9 @@ class Auth extends Controller {
             $this->session->set_userdata('username', $username);
             redirect('products');
         } else {
-            $this->session->set_flashdata('error', '🌸 Invalid pink credentials! Please try again.');
-            redirect('login');
-        }
+    $this->session->set_flashdata('error', 'Invalid username or password! Please try again.');
+    redirect('login');
+}
     }
 
     // Logout Session

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Login - Inventory Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -18,12 +19,24 @@
         
         <?php if(isset($_SESSION['error'])): ?>
             <div class="bg-rose-50 border border-rose-200 text-rose-600 p-3 rounded-lg text-sm mb-6 text-center font-medium">
+=======
+    <title>Login - Product System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-md border border-gray-700">
+        <h2 class="text-2xl font-bold text-center mb-6 text-indigo-400">Account Login</h2>
+        
+        <?php if(isset($_SESSION['error'])): ?>
+            <div class="bg-red-500/10 border border-red-500 text-red-400 p-3 rounded-lg text-sm mb-4">
+>>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
                 <?= $_SESSION['error']; unset($_SESSION['error']); ?>
             </div>
         <?php endif; ?>
 
         <form action="<?= site_url('authenticate'); ?>" method="POST" class="space-y-4">
             <div>
+<<<<<<< HEAD
                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Username</label>
                 <input type="text" name="username" placeholder="Enter username" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
             </div>
@@ -34,6 +47,16 @@
             <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg text-sm transition duration-150 shadow-sm mt-2">
                 Sign In
             </button>
+=======
+                <label class="block text-sm font-medium text-gray-300 mb-1">Username</label>
+                <input type="text" name="username" required class="w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                <input type="password" name="password" required class="w-full bg-gray-700 border border-gray-600 rounded-lg p-2.5 text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 font-semibold py-2.5 rounded-lg transition">Login</button>
+>>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
         </form>
     </div>
 </body>

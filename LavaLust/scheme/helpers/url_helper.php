@@ -128,7 +128,14 @@ if ( ! function_exists('redirect'))
 		{
 			header('Location: ' . $uri, true, ($permanent === true) ? 301 : 302);
 		}
+<<<<<<< HEAD
 		($exit === true) ?? exit();
+=======
+		if ($exit === true)
+		{
+			exit();
+		}
+>>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
 	}
 }
 

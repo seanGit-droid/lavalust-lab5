@@ -44,19 +44,42 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 */
 /** @var object $router **/
 
+<<<<<<< HEAD
 //$router->get('/student', 'StudentController::index');
 //$router->get('/student/login', 'StudentController::login');
 //$router->get('/student/logout', 'StudentController::logout');
 //$router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
+=======
+//$router->get('/', 'UsersController::index');
+//$router->get('/student', 'StudentController::index');
+//$router->get('/student/login', 'StudentController::login');
+//$router->get('/student/logout', 'StudentController::logout');
+
+// Protected route applying StudentMiddleware
+//$router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
+
+>>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
 //$router->get('/users', 'UsersController::index');
 
 
 
+<<<<<<< HEAD
 $router->get('/', 'Products::inventory');
+=======
+
+// Load middleware configuration
+load_class('config', 'kernel')->load('middleware');
+
+// Lab 5 Default Route -> Login
+$router->get('/', 'Auth::login');
+
+// Auth Routes
+>>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
 $router->get('/login', 'Auth::login');
 $router->post('/authenticate', 'Auth::authenticate');
 $router->get('/logout', 'Auth::logout');
 
+<<<<<<< HEAD
 // Main Inventory Dashboard
 $router->get('/products', 'Products::inventory');
 
@@ -83,3 +106,12 @@ $router->post('/products/update_item/(:any)', 'Products::update_item/$1');
 $router->post('/products/update/(:any)', 'Products::update_item/$1');
 $router->get('/products/remove_item/(:any)', 'Products::remove_item/$1');
 $router->get('/products/delete/(:any)', 'Products::remove_item/$1');
+=======
+// Products CRUD Routes
+$router->get('/products', 'Products::index')->middleware('AuthMiddleware');
+$router->get('/products/create', 'Products::create')->middleware('AuthMiddleware');
+$router->post('/products/store', 'Products::store')->middleware('AuthMiddleware');
+$router->get('/products/edit/{id}', 'Products::edit')->middleware('AuthMiddleware');
+$router->post('/products/update/{id}', 'Products::update')->middleware('AuthMiddleware');
+$router->get('/products/delete/{id}', 'Products::delete')->middleware('AuthMiddleware');
+>>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87

@@ -31,4 +31,8 @@
         <a href="<?= site_url('student/logout'); ?>" style="color:red; text-decoration:none;">Revoke Access & Logout</a>
     </div>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87

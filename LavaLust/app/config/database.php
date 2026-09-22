@@ -1,16 +1,17 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
-$database['default'] = array(
-    'hostname' => 'mysql-2cc8c2cd-lavalustproject-1112.b.aivencloud.com',
-    'username' => 'avnadmin',
-    'password' => 'AVNS_86pO-PmnQzQCygKzmzt',
-    'database' => 'defaultdb',
-    'port'     => 20551,
-    'driver'   => 'mysql',
-    'charset'  => 'utf8',
-    'collate'  => 'utf8_general_ci',
-    'prefix'   => '',
+$database['main'] = array(
+    'driver'	=> getenv('DB_DRIVER') ?: 'mysql',
+    'hostname'	=> getenv('DB_HOST') ?: 'mysql-1ae50f6f-lavalustproject1.c.aivencloud.com',
+    'port'		=> getenv('DB_PORT') ?: 21503,
+    'username'	=> getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: 'avnadmin'),
+    'password'	=> getenv('DB_PASSWORD') ?: 'AVNS_PIE4ft5nL6UkoDtHdqg',
+    'database'	=> getenv('DB_NAME') ?: (getenv('DB_DATABASE') ?: 'mydb'),
+    'charset'	=> 'utf8mb4',
+    'dbprefix'	=> '',
+    'path'      => ''
 );
 
-$database['main'] = &$database['default'];
+$database['default'] = $database['main'];
+?>

@@ -44,31 +44,42 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 */
 /** @var object $router **/
 
-//$router->get('/', 'UsersController::index');
 //$router->get('/student', 'StudentController::index');
 //$router->get('/student/login', 'StudentController::login');
 //$router->get('/student/logout', 'StudentController::logout');
-
-// Protected route applying StudentMiddleware
 //$router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
-
 //$router->get('/users', 'UsersController::index');
 
 
 
-
-// Lab 5 Default Route -> Login
-$router->get('/', 'Auth::login');
-
-// Auth Routes
+$router->get('/', 'Products::inventory');
 $router->get('/login', 'Auth::login');
 $router->post('/authenticate', 'Auth::authenticate');
 $router->get('/logout', 'Auth::logout');
 
-// Products CRUD Routes
-$router->get('/products', 'Products::index');
-$router->get('/products/create', 'Products::create');
-$router->post('/products/store', 'Products::store');
-$router->get('/products/edit/{id}', 'Products::edit');
-$router->post('/products/update/{id}', 'Products::update');
-$router->get('/products/delete/{id}', 'Products::delete');
+// Main Inventory Dashboard
+$router->get('/products', 'Products::inventory');
+
+// Add Item Routes
+$router->get('/products/new', 'Products::add_item');
+$router->get('/products/add_item', 'Products::add_item');
+$router->post('/products/save', 'Products::save_item');
+$router->post('/products/save_item', 'Products::save_item');
+
+// Edit & Update Routes (Query String + URI Segment Support)
+$router->get('/products/modify_item', 'Products::modify_item');
+$router->get('/products/edit', 'Products::modify_item');
+$router->post('/products/update_item', 'Products::update_item');
+$router->post('/products/update', 'Products::update_item');
+
+// Delete Routes
+$router->get('/products/remove_item', 'Products::remove_item');
+$router->get('/products/delete', 'Products::remove_item');
+
+// Fallback dynamic matchers
+$router->get('/products/modify_item/(:any)', 'Products::modify_item/$1');
+$router->get('/products/modify/(:any)', 'Products::modify_item/$1');
+$router->post('/products/update_item/(:any)', 'Products::update_item/$1');
+$router->post('/products/update/(:any)', 'Products::update_item/$1');
+$router->get('/products/remove_item/(:any)', 'Products::remove_item/$1');
+$router->get('/products/delete/(:any)', 'Products::remove_item/$1');

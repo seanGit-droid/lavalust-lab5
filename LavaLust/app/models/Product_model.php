@@ -3,43 +3,56 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 class Product_model extends Model {
 
-<<<<<<< HEAD
-    // Fetch all products for Czyen's dashboard
-=======
->>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
+    protected $table = 'products';
+    protected $primary_key = 'id';
+    protected $fillable = [
+        'product_name',
+        'description',
+        'price',
+        'quantity'
+    ];
+
     public function get_all_products() {
-        return $this->db->table('products')->get_all();
+        return $this->db->table($this->table)->get_all();
     }
 
-<<<<<<< HEAD
-    // Fetch single product details by ID
-=======
->>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
+    public function all() {
+        return $this->get_all_products();
+    }
+
     public function get_product_by_id($id) {
-        return $this->db->table('products')->where('id', $id)->get();
+        $result = $this->db->table($this->table)->where($this->primary_key, $id)->get();
+        if (is_array($result) && isset($result[0]) && is_array($result[0])) {
+            return $result[0];
+        }
+        return $result;
     }
 
-<<<<<<< HEAD
-    // Insert new product into Aiven MySQL database
-=======
->>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
+    public function find($id) {
+        return $this->get_product_by_id($id);
+    }
+
     public function insert_product($data) {
-        return $this->db->table('products')->insert($data);
+        return $this->db->table($this->table)->insert($data);
     }
 
-<<<<<<< HEAD
-    // Update product info in database
-=======
->>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
+    public function insert($data) {
+        return $this->insert_product($data);
+    }
+
     public function update_product($id, $data) {
-        return $this->db->table('products')->where('id', $id)->update($data);
+        return $this->db->table($this->table)->where($this->primary_key, $id)->update($data);
     }
 
-<<<<<<< HEAD
-    // Remove product entry
-=======
->>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
+    public function update($id, $data) {
+        return $this->update_product($id, $data);
+    }
+
     public function delete_product($id) {
-        return $this->db->table('products')->where('id', $id)->delete();
+        return $this->db->table($this->table)->where($this->primary_key, $id)->delete();
+    }
+
+    public function delete($id) {
+        return $this->delete_product($id);
     }
 }

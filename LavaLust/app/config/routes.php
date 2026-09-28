@@ -40,78 +40,40 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 | -------------------------------------------------------------------
 | Here is where you can register web routes for your application.
 |
-|
 */
 /** @var object $router **/
 
-<<<<<<< HEAD
-//$router->get('/student', 'StudentController::index');
-//$router->get('/student/login', 'StudentController::login');
-//$router->get('/student/logout', 'StudentController::logout');
-//$router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
-=======
-//$router->get('/', 'UsersController::index');
-//$router->get('/student', 'StudentController::index');
-//$router->get('/student/login', 'StudentController::login');
-//$router->get('/student/logout', 'StudentController::logout');
+$router->get('/', 'Welcome::index');
 
-// Protected route applying StudentMiddleware
-//$router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
-
->>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
-//$router->get('/users', 'UsersController::index');
-
-
-
-<<<<<<< HEAD
-$router->get('/', 'Products::inventory');
-=======
-
-// Load middleware configuration
 load_class('config', 'kernel')->load('middleware');
 
-// Lab 5 Default Route -> Login
-$router->get('/', 'Auth::login');
-
-// Auth Routes
->>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
+// Authentication Routes
 $router->get('/login', 'Auth::login');
+$router->post('/login', 'Auth::authenticate');
 $router->post('/authenticate', 'Auth::authenticate');
 $router->get('/logout', 'Auth::logout');
+$router->post('/logout', 'Auth::logout');
 
-<<<<<<< HEAD
-// Main Inventory Dashboard
-$router->get('/products', 'Products::inventory');
+// Products CRUD Routes (Protected by auth middleware)
+$router->get('/products', 'Products::index')->middleware('auth');
 
-// Add Item Routes
-$router->get('/products/new', 'Products::add_item');
-$router->get('/products/add_item', 'Products::add_item');
-$router->post('/products/save', 'Products::save_item');
-$router->post('/products/save_item', 'Products::save_item');
+// Create Routes
+$router->get('/products/create', 'Products::create')->middleware('auth');
+$router->post('/products/create', 'Products::store')->middleware('auth');
+$router->post('/products/store', 'Products::store')->middleware('auth');
 
-// Edit & Update Routes (Query String + URI Segment Support)
-$router->get('/products/modify_item', 'Products::modify_item');
-$router->get('/products/edit', 'Products::modify_item');
-$router->post('/products/update_item', 'Products::update_item');
-$router->post('/products/update', 'Products::update_item');
+// Edit & Update Routes
+$router->get('/products/edit/{id}', 'Products::edit')->middleware('auth');
+$router->post('/products/edit/{id}', 'Products::update')->middleware('auth');
+$router->post('/products/update/{id}', 'Products::update')->middleware('auth');
 
 // Delete Routes
-$router->get('/products/remove_item', 'Products::remove_item');
-$router->get('/products/delete', 'Products::remove_item');
+$router->get('/products/delete/{id}', 'Products::delete')->middleware('auth');
+$router->post('/products/delete/{id}', 'Products::delete')->middleware('auth');
 
-// Fallback dynamic matchers
-$router->get('/products/modify_item/(:any)', 'Products::modify_item/$1');
-$router->get('/products/modify/(:any)', 'Products::modify_item/$1');
-$router->post('/products/update_item/(:any)', 'Products::update_item/$1');
-$router->post('/products/update/(:any)', 'Products::update_item/$1');
-$router->get('/products/remove_item/(:any)', 'Products::remove_item/$1');
-$router->get('/products/delete/(:any)', 'Products::remove_item/$1');
-=======
-// Products CRUD Routes
-$router->get('/products', 'Products::index')->middleware('AuthMiddleware');
-$router->get('/products/create', 'Products::create')->middleware('AuthMiddleware');
-$router->post('/products/store', 'Products::store')->middleware('AuthMiddleware');
-$router->get('/products/edit/{id}', 'Products::edit')->middleware('AuthMiddleware');
-$router->post('/products/update/{id}', 'Products::update')->middleware('AuthMiddleware');
-$router->get('/products/delete/{id}', 'Products::delete')->middleware('AuthMiddleware');
->>>>>>> 08eae6d04971826e8153e702e6c1c05b634b5a87
+// Previous labs routes
+$router->get('/users', 'UsersController::index');
+$router->get('/student', 'StudentController::index');
+$router->get('/student/login', 'StudentController::login');
+$router->get('/student/logout', 'StudentController::logout');
+$router->get('/student/profile', 'StudentController::profile')->middleware('student');

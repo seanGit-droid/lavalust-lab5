@@ -3,34 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
+    <title><?= htmlspecialchars($page_title ?? 'Add Product'); ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
-    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-lg border border-gray-700 transition-all duration-300 hover:border-indigo-500/50">
-        <h2 class="text-2xl font-bold mb-6 text-indigo-400">Add New Product</h2>
-        <form action="<?= site_url('products/store'); ?>" method="POST" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-300 mb-1">Product Name</label>
-                <input type="text" name="product_name" required class="w-full bg-gray-700 border border-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-lg p-2.5 text-white transition duration-200 outline-none">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 w-full max-w-lg transition-all">
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold tracking-tight text-slate-900">Add New Product</h2>
+            <p class="text-xs text-slate-500 mt-1">Enter product details to add to inventory</p>
+        </div>
+
+        <?php if(!empty($error)): ?>
+            <div class="bg-rose-50 border border-rose-200 text-rose-600 px-4 py-3 rounded-xl text-sm mb-6 flex items-center gap-2">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span><?= htmlspecialchars($error); ?></span>
             </div>
+        <?php endif; ?>
+
+        <form action="<?= site_url('products/create'); ?>" method="POST" class="space-y-4">
             <div>
-                <label class="block text-sm font-medium text-gray-300 mb-1">Description</label>
-                <textarea name="description" rows="3" class="w-full bg-gray-700 border border-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-lg p-2.5 text-white transition duration-200 outline-none"></textarea>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Product Name</label>
+                <input type="text" name="product_name" value="<?= htmlspecialchars($old['product_name'] ?? ''); ?>" required autofocus
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition duration-200" placeholder="e.g. Oversized Graphic T-Shirt">
             </div>
+
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Description</label>
+                <textarea name="description" rows="3"
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition duration-200" placeholder="e.g. 100% combed cotton, heavyweight..."><?= htmlspecialchars($old['description'] ?? ''); ?></textarea>
+            </div>
+
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1">Price</label>
-                    <input type="number" step="0.01" name="price" required class="w-full bg-gray-700 border border-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-lg p-2.5 text-white transition duration-200 outline-none">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Price (₱)</label>
+                    <input type="number" step="0.01" name="price" value="<?= htmlspecialchars($old['price'] ?? ''); ?>" required
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition duration-200" placeholder="0.00">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1">Quantity</label>
-                    <input type="number" name="quantity" required class="w-full bg-gray-700 border border-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-lg p-2.5 text-white transition duration-200 outline-none">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Quantity</label>
+                    <input type="number" name="quantity" value="<?= htmlspecialchars($old['quantity'] ?? ''); ?>" required
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition duration-200" placeholder="0">
                 </div>
             </div>
-            <div class="flex justify-between items-center pt-4">
-                <a href="<?= site_url('products'); ?>" class="text-gray-400 hover:text-white transition">Cancel</a>
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-2.5 rounded-lg transition duration-200 shadow-md hover:shadow-indigo-500/20">Save Product</button>
+
+            <div class="flex justify-end items-center gap-3 pt-4 border-t border-slate-100 mt-6">
+                <a href="<?= site_url('products'); ?>" 
+                    class="px-4 py-2.5 text-sm text-slate-600 hover:text-slate-900 font-medium transition">
+                    Cancel
+                </a>
+                <button type="submit" 
+                    class="bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition duration-200 shadow-md shadow-indigo-500/20">
+                    Save Product
+                </button>
             </div>
         </form>
     </div>

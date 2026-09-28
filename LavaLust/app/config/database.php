@@ -26,30 +26,29 @@ foreach ($env_paths as $env_file) {
     }
 }
 
-// Active working database for Sean
-$active_host = 'mysql-1ae50f6f-lavalustproject1.c.aivencloud.com';
-$active_port = 21503;
-$active_user = 'avnadmin';
-$active_pass = base64_decode('QVZOU19QSUU0ZnQ1bkw2VWtvRHRIZHFn');
-$active_db   = 'mydb';
+// Sean's database server
+$sean_ip   = '139.59.68.82';
+$sean_port = 20551;
+$sean_user = 'avnadmin';
+$sean_pass = base64_decode('QVZOU184NnBPLVBtblF6UUN5Z0t6bXp0');
+$sean_db   = 'mydb';
 
-$host     = getenv('DB_HOST') ?: $active_host;
-$port     = getenv('DB_PORT') ?: $active_port;
-$username = getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: $active_user);
+$host     = getenv('DB_HOST') ?: $sean_ip;
+$port     = getenv('DB_PORT') ?: $sean_port;
+$username = getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: $sean_user);
 $password = getenv('DB_PASSWORD') ?: '';
-$dbname   = getenv('DB_NAME') ?: (getenv('DB_DATABASE') ?: $active_db);
+$dbname   = getenv('DB_NAME') ?: (getenv('DB_DATABASE') ?: $sean_db);
 $driver   = getenv('DB_DRIVER') ?: 'mysql';
 
-// Detect expired old host (e.g. Render env still pointing to old demo host), unresolvable host, or placeholder passwords
-$is_expired_host = (strpos($host, 'mysql-2cc8c2cd') !== false || strpos($host, 'anonuevo') !== false);
-$is_unresolvable = !filter_var($host, FILTER_VALIDATE_IP) && (gethostbyname($host) === $host);
+// If hostname has DNS resolution failure (like mysql-2cc8c2cd on Render), use direct IP
+$is_dns_failing = (strpos($host, 'mysql-2cc8c2cd') !== false) || (!filter_var($host, FILTER_VALIDATE_IP) && gethostbyname($host) === $host);
 
-if ($is_expired_host || $is_unresolvable || empty($password) || strpos($password, 'your_password') !== false) {
-    $host     = $active_host;
-    $port     = $active_port;
-    $username = $active_user;
-    $password = $active_pass;
-    $dbname   = $active_db;
+if ($is_dns_failing || empty($password) || strpos($password, 'your_password') !== false) {
+    $host     = $sean_ip;
+    $port     = $sean_port;
+    $username = $sean_user;
+    $password = $sean_pass;
+    $dbname   = $sean_db;
 }
 
 $database['main'] = array(

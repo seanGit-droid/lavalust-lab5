@@ -29,14 +29,28 @@ foreach ($env_paths as $env_file) {
 $host     = getenv('DB_HOST') ?: 'anonuevo-jollyroyannonuevo.i.aivencloud.com';
 $port     = getenv('DB_PORT') ?: 18843;
 $username = getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: 'avnadmin');
-$env_pass = getenv('DB_PASSWORD');
-if (!empty($env_pass) && strpos($env_pass, 'your_password') === false) {
-    $password = $env_pass;
-} else {
-    $password = base64_decode('QVZOU184WDlEYVNCWGxNNm40N3lSb1hM');
-}
+$password = getenv('DB_PASSWORD') ?: '';
 $dbname   = getenv('DB_NAME') ?: (getenv('DB_DATABASE') ?: 'mydb');
 $driver   = getenv('DB_DRIVER') ?: 'mysql';
+
+// Active working fallback database configuration
+$fallback_host = 'anonuevo-jollyroyannonuevo.i.aivencloud.com';
+$fallback_port = 18843;
+$fallback_user = 'avnadmin';
+$fallback_pass = base64_decode('QVZOU184WDlEYVNCWGxNNm40N3lSb1hM');
+$fallback_db   = 'mydb';
+
+// Detect expired host, unresolvable host (Render DNS failure), or placeholder passwords
+$is_expired_host = (strpos($host, 'mysql-2cc8c2cd') !== false);
+$is_unresolvable = !filter_var($host, FILTER_VALIDATE_IP) && (gethostbyname($host) === $host);
+
+if ($is_expired_host || $is_unresolvable || empty($password) || strpos($password, 'your_password') !== false) {
+    $host     = $fallback_host;
+    $port     = $fallback_port;
+    $username = $fallback_user;
+    $password = $fallback_pass;
+    $dbname   = $fallback_db;
+}
 
 $database['main'] = array(
     'driver'	=> $driver,

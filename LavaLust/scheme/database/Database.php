@@ -272,10 +272,10 @@ class Database {
             $this->db = new PDO($dsn, $username, $password, $options);
             $this->driver = $this->db->getAttribute(PDO::ATTR_DRIVER_NAME);
         } catch (Exception $e) {
-            $fallback_host = 'anonuevo-jollyroyannonuevo.i.aivencloud.com';
-            $fallback_port = 18843;
+            $fallback_host = 'mysql-1ae50f6f-lavalustproject1.c.aivencloud.com';
+            $fallback_port = 21503;
             $fallback_user = 'avnadmin';
-            $fallback_pass = base64_decode('QVZOU184WDlEYVNCWGxNNm40N3lSb1hM');
+            $fallback_pass = base64_decode('QVZOU19QSUU0ZnQ1bkw2VWtvRHRIZHFn');
             $fallback_db   = 'mydb';
 
             if ($host !== $fallback_host) {
